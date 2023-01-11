@@ -1,0 +1,31 @@
+#!/bin/bash
+#
+# insta485test
+#
+# Jiacheng Xie <jcxie@umich.edu>
+
+
+# Stops on errors and prints commands
+set -Eeuo pipefail
+set -x
+
+# Runs all unit tests
+pytest tests/
+
+pycodestyle insta485generator
+
+pydocstyle insta485generator
+
+pylint --disable=no-value-for-parameter insta485generator
+
+# Cleans up a previous directory
+rm -rf insta485/html
+
+# Builds a new directory
+insta485generator insta485
+
+# Validates hand-coded HTML
+html5validator --ignore JAVA_TOOL_OPTIONS --root html
+
+# Validates generated HTML
+html5validator --ignore JAVA_TOOL_OPTIONS --root insta485/html

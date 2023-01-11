@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>insta485</title>
+</head>
+<body>
+    <div style="position: absolute; top: 0; left: 0; width: 100px; text-align:left;">
+        <a href="/">Insta485</a>
+    </div>
+    <div style="position: absolute; top: 0; right: 0; width: 200px; text-align:right;">
+        <a href="/explore/">explore</a>
+        <a href="/users/{{ logname }}/">{{ logname }}</a>
+    </div>
+    <br>
+    <p>
+        {{ username }}
+        <br>
+        {% if logname is eq username %}
+        {% elif logname_follows_username is true %}
+            following
+        {% else %}
+            not following
+        {% endif %}
+        <br>
+        {% if total_posts is eq 1 %}
+            1 post
+        {% else %}
+            {{ total_posts }} posts
+        {% endif %}
+        <b><a href="/users/{{ username }}/followers/">
+            {% if followers is eq 1 %}
+            1 follower
+            {% else %}
+            {{ followers }} followers
+            {% endif %}
+        </a></b>
+        <b><a href="/users/{{ username }}/following/">
+            {{ following }} following</a>
+        </b>
+        <br>
+        {{ fullname }}
+        <br>
+        {% for post in posts %}
+        <a href="/posts/{{ post.postid }}/">
+            <img src="{{ post.img_url }}" 
+                alt="post{{ post.postid }}"
+                style="width:300px;height:250px;">
+        </a>
+        {% endfor %}
+    </p>
+</body>
+</html>
